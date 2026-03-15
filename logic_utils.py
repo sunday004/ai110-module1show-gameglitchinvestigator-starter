@@ -70,3 +70,10 @@ def update_score(current_score: int, outcome: str, attempt_number: int):
         return current_score - 5
 
     return current_score
+
+
+def update_high_score(current_high_score: int, current_score: int):
+    """Return the updated session high score."""
+    if current_score > current_high_score:
+        return current_score
+    return current_high_score

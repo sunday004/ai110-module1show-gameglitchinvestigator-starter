@@ -1,4 +1,4 @@
-from logic_utils import check_guess, update_score
+from logic_utils import check_guess, update_high_score, update_score
 
 
 def test_winning_guess_outcome_and_message():
@@ -59,3 +59,37 @@ def test_secret_stays_stable_across_reruns_once_initialized():
     assert second_secret == 42
     assert state["secret"] == 42
     assert len(calls) == 1
+
+
+def test_high_score_updates_when_score_is_higher():
+    assert update_high_score(current_high_score=80, current_score=100) == 100
+
+
+def test_high_score_does_not_change_when_score_is_lower():
+    assert update_high_score(current_high_score=100, current_score=90) == 100
+
+
+def _apply_new_game_reset_without_touching_high_score(state):
+    """Mirror app new-game logic where high score is intentionally preserved."""
+    state["attempts"] = 0
+    state["score"] = 0
+    state["status"] = "playing"
+    state["history"] = []
+
+
+def test_high_score_is_not_reset_by_new_game_logic():
+    state = {
+        "attempts": 4,
+        "score": 70,
+        "high_score": 120,
+        "status": "won",
+        "history": [11, 22, 33, 44],
+    }
+
+    _apply_new_game_reset_without_touching_high_score(state)
+
+    assert state["attempts"] == 0
+    assert state["score"] == 0
+    assert state["status"] == "playing"
+    assert state["history"] == []
+    assert state["high_score"] == 120

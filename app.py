@@ -4,6 +4,7 @@ from logic_utils import (
     check_guess,
     get_range_for_difficulty,
     parse_guess,
+    update_high_score,
     update_score,
 )
 
@@ -41,6 +42,9 @@ if "attempts" not in st.session_state:
 if "score" not in st.session_state:
     st.session_state.score = 0
 
+if "high_score" not in st.session_state:
+    st.session_state.high_score = 0
+
 if "status" not in st.session_state:
     st.session_state.status = "playing"
 
@@ -48,9 +52,9 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 
-def render_status(attempts_box, debug_box, attempt_limit, difficulty):
+def render_status(attempts_box, debug_box, attempt_limit, difficulty, low, high):
     attempts_box.info(
-        f"Guess a number between 1 and 100. "
+        f"Guess a number between {low} and {high}. "
         f"Attempts left: {attempt_limit - st.session_state.attempts}"
     )
 
@@ -59,14 +63,20 @@ def render_status(attempts_box, debug_box, attempt_limit, difficulty):
             st.write("Secret:", st.session_state.secret)
             st.write("Attempts:", st.session_state.attempts)
             st.write("Score:", st.session_state.score)
+            st.write("High Score:", st.session_state.high_score)
             st.write("Difficulty:", difficulty)
             st.write("History:", st.session_state.history)
+
+
+def render_score_metrics(current_score_box, high_score_box):
+    current_score_box.metric("Current Score", st.session_state.score)
+    high_score_box.metric("High Score", st.session_state.high_score)
 
 st.subheader("Make a guess")
 
 attempts_box = st.empty()
 debug_box = st.empty()
-render_status(attempts_box, debug_box, attempt_limit, difficulty)
+render_status(attempts_box, debug_box, attempt_limit, difficulty, low, high)
 
 raw_guess = st.text_input(
     "Enter your guess:",
@@ -80,6 +90,14 @@ with col2:
     new_game = st.button("New Game 🔁")
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
+
+score_col1, score_col2 = st.columns(2)
+with score_col1:
+    current_score_box = st.empty()
+with score_col2:
+    high_score_box = st.empty()
+
+render_score_metrics(current_score_box, high_score_box)
 
 if new_game:
     st.session_state.attempts = 0
@@ -123,6 +141,15 @@ if submit:
             attempt_number=st.session_state.attempts,
         )
 
+        previous_high_score = st.session_state.high_score
+        st.session_state.high_score = update_high_score(
+            current_high_score=st.session_state.high_score,
+            current_score=st.session_state.score,
+        )
+
+        if st.session_state.high_score > previous_high_score:
+            st.success(f"🏆 New High Score: {st.session_state.high_score}!")
+
         if outcome == "Win":
             st.balloons()
             st.session_state.status = "won"
@@ -139,7 +166,8 @@ if submit:
                     f"Score: {st.session_state.score}"
                 )
 
-render_status(attempts_box, debug_box, attempt_limit, difficulty)
+render_score_metrics(current_score_box, high_score_box)
+render_status(attempts_box, debug_box, attempt_limit, difficulty, low, high)
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
