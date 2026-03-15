@@ -46,3 +46,7 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+- I definitely want to imbibe the habit of intentionally using AI as a teammate to understand bugs and develop efficient fixes for them.
+- One thing I could do differently is to have a workflow or flow to automate the process in a more structured way
+- It made me collaborate more with AI, without letting it do all the work.
