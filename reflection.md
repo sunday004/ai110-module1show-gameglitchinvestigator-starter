@@ -24,21 +24,19 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 3. Debugging and testing your fixes
 
-- How did you decide whether a bug was really fixed?
-- Describe at least one test you ran (manual or using pytest)  
-  and what it showed you about your code.
-- Did AI help you design or understand any tests? How?
-
 - I practically tested and made sure the app now behaves as expected, and the issue identified and observed was fixed.
 - I tested various higher and lower values to see the effect on the score and ensure they all subtracted 5. I also ensured the final result after a correct answer is as expected, especially after a first correct guess (I'd expect a score of 100).
-- 
+- I used AI to generate tests for the bugs we fixed, and I already understood them with my python background knowledge
 
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
+- The secret number kept changing because Streamlit reruns the script from top to bottom on almost every interaction. In the original version, a new random secret was being generated during those reruns, so clicks and input changes could silently replace the target number mid-game.
 - the session state and reruns is a means to keep track and update variables in your app, this could be numbers, text, or even visual components like buttons, colors, etc.
-- I made sure to only change the state on New Game button press, and to set it to low/high instead of 1/100 to handle difficulty changes.
+- I moved the secret number into session state and only re-generated it when the New Game button is pressed, instead of creating a new random value during normal reruns.
+
+
 
 ---
 
