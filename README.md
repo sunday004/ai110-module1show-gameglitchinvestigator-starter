@@ -56,4 +56,7 @@ Changed difficulty levels mapping to attempts to model binary search and difficu
 ![alt text](image.png)
 ## 🚀 Stretch Features
 
-- [ ] [If you choose to complete Challenge 4, insert a screenshot of your Enhanced Game UI here]
+
+- I implemented the High Score tracking feature that displays the current score beside the current high score.
+
+![alt text](image-1.png)
