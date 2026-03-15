@@ -15,13 +15,10 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 2. How did you use AI as a teammate?
 
-- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
-- Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
-- Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
-
 - I used github copilot powered by Claude Sonnet 4.5, both for validating my thoughts, brainstorming fixes, and as an agent to implemented fixes. I also used it to understand the rationale behind certain logic and bugs and compare with the expected case.
 - I specifically used it to explain the purpose of the logic_utils file
 - It gave a correct suggestion to switch the responses on the hint section of the code, and also deduct point always for wrong guess.
+- Almost all the AI suggestions were correct, I tried to be cautious. An example of a wrong response was with the Difficulty response, but I figured to inspire my attempts using binary search.
 
 ---
 
@@ -33,15 +30,15 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - Did AI help you design or understand any tests? How?
 
 - I practically tested and made sure the app now behaves as expected, and the issue identified and observed was fixed.
+- I tested various higher and lower values to see the effect on the score and ensure they all subtracted 5. I also ensured the final result after a correct answer is as expected, especially after a first correct guess (I'd expect a score of 100).
 - 
 
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
-- In your own words, explain why the secret number kept changing in the original app.
-- How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
-- What change did you make that finally gave the game a stable secret number?
+- the session state and reruns is a means to keep track and update variables in your app, this could be numbers, text, or even visual components like buttons, colors, etc.
+- I made sure to only change the state on New Game button press, and to set it to low/high instead of 1/100 to handle difficulty changes.
 
 ---
 
